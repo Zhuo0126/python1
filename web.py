@@ -25,6 +25,9 @@ try:
     time.sleep(1)
     search_box = driver.find_element("id", "GF_ID22").send_keys('test2')
 
+    time.sleep(1)
+    checkbox=driver.find_element("id","recaptcha")
+    checkbox.click()
     # driver.find_element_by_id('kw').send_keys('python')
     time.sleep(1)
     # driver.find_element_by_id('su').click()
