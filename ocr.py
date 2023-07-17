@@ -4,7 +4,7 @@ from PIL import Image
 from collections import defaultdict
 
 # tesseract.exe所在的文件路径
-pytesseract.pytesseract.tesseract_cmd = 'D://PythonLearn/Tesseract-OCR/tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = '/PythonLearn/Tesseract-OCR/tesseract.exe'
 
 # 获取图片中像素点数量最多的像素
 def get_threshold(image):
@@ -99,7 +99,7 @@ def main():
 
     # 识别指定文件目录下的图片
     # 图片存放目录figures
-    dir = 'D://figures/tt'
+    dir = './figures/tt'
 
     correct_count = 0  # 图片总数
     total_count = 0    # 识别正确的图片数量
