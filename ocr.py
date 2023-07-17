@@ -113,7 +113,7 @@ def main():
             answer = file.split('.')[0]  # 图片名称，即图片中的正确文字
             recognizition = OCR_lmj(image_path) # 图片识别的文字结果
 
-            print((answer, recognizition))
+            print((answer, recognizition.strip()))
             if recognizition == answer: # 如果识别结果正确，则total_count加1
                 correct_count += 1
 
