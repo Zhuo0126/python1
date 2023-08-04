@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    @Autowired(required = false)
+    @Autowired(required = true)
     UserMapper usermapper;
     public User addMember(String username, String password){
         return usermapper.findByUserName(username,password);

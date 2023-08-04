@@ -3,12 +3,12 @@
 <mapper namespace="com.springboot.demo.dao.UserMapper">
 
 <resultMap type="com.springboot.demo.model.User" id="UserMap">
-   <id column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"/>
-   <id column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+   <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"/>
+   <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
 </resultMap>
 
 <select id="findByUserName" resultMap="UserMap">
-	select * from sys.user where username = #{userName} and password = #{password}
+	select * from user where username = #{username} and password = #{password}
 </select>
 
 </mapper>

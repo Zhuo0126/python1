@@ -1,10 +1,8 @@
 package com.springboot.demo.controller;
 
-import com.springboot.demo.dao.UserMapper;
 import com.springboot.demo.model.ApiResponse;
 import com.springboot.demo.model.User;
 import com.springboot.demo.service.UserService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;

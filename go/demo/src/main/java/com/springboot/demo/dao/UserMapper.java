@@ -2,10 +2,10 @@ package com.springboot.demo.dao;
 
 import com.springboot.demo.model.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
+//@Component
 public interface UserMapper {
-	User findByUserName(String userName,String Password);
+	User findByUserName(@Param("username") String username, @Param("password") String password);
 }
