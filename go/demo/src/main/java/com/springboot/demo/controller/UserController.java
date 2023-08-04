@@ -3,6 +3,7 @@ package com.springboot.demo.controller;
 import com.springboot.demo.dao.UserMapper;
 import com.springboot.demo.model.ApiResponse;
 import com.springboot.demo.model.User;
+import com.springboot.demo.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    UserMapper userMapper;
+    @Autowired(required = false)
+    UserService userService;
 
     private static ApplicationContext applicationContext;
 
@@ -23,7 +24,7 @@ public class UserController {
         String username = loginData.getUserName();
         String password = loginData.getPassword();
 
-        User user =userMapper.findByUserName(username,password);
+        User user =userService.addMember(username,password);
 
         if(user != null){
             ApiResponse response= new ApiResponse(true,"登錄成功");
