@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired(required = false)
-    UserService userService;
+    private UserService userService;
 
     private static ApplicationContext applicationContext;
 

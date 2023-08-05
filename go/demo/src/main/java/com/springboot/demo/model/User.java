@@ -1,12 +1,9 @@
 package com.springboot.demo.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class User implements Serializable{
 
-	private static final long serialVersionUID = -5440372534300871944L;
-	
 	private String username;
 	private String password;
 	public String getUserName() {

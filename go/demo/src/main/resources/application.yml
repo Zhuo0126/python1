@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sys?serverTimezone=UTC&useSSL=false
+    username: root
+    password: asz90406
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:com/springboot/demo/mapper/*.xml
+  type-aliases-package: com.esagent.bean
+
+server:
+  port: 8080
