@@ -11,7 +11,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 //@Mapper
-@MapperScan("com.springboot.demo.mapper.*")
+//@MapperScan("com.springboot.demo.mapper.*")
 //@ComponentScan(basePackages = {"com.springboot.demo.model","com.springboot.demo.controller","com.springboot.demo.service","com.springboot.demo.impl","com.springboot.demo.mapper"})
 public class Application {
 
