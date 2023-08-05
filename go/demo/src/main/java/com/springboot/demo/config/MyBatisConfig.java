@@ -14,7 +14,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.springboot.demo.mapper.*", sqlSessionTemplateRef = "mySqlSessionTemplate")
+@MapperScan(basePackages = "com.springboot.demo.mapper", sqlSessionTemplateRef = "mySqlSessionTemplate")
 public class MyBatisConfig {
 
     private final DataSource dataSource;

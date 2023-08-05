@@ -26,8 +26,10 @@ public class UserController {
 
         if(user != null){
             ApiResponse response= new ApiResponse(true,"登錄成功");
+            System.out.println("成功");
             return ResponseEntity.ok().body(response);
         }else{
+            System.out.println("失敗");
              return  null;
         }
 //        if ("admin".equals(username) && "password".equals(password)) {
