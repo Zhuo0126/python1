@@ -2,6 +2,7 @@ package com.springboot.demo.controller;
 
 import com.springboot.demo.model.ApiResponse;
 import com.springboot.demo.model.User;
+import com.springboot.demo.service.RSA;
 import com.springboot.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-
     @Autowired(required = false)
     private UserService userService;
+
+    @Autowired(required = false)
+    private RSA rsa;
+
 
     private static ApplicationContext applicationContext;
 
@@ -38,6 +42,12 @@ public class UserController {
 //        } else {
 //            return null; // 登錄失敗返回null
 //        }
+    }
+
+    @GetMapping("/pubkey")
+    public String getPublicKey(){
+        return rsa.getPublicKey();
+//        return "234";
     }
 
 }

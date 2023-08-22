@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, {  useState ,useEffect} from 'react';
 import './LoginForm.css'; // 导入自定义的 CSS 样式
 import { useNavigate } from 'react-router-dom';
  
 const LoginForm = () => {
+  const [publicKey,setPublicKey] = useState('');
+
+  const getPublicKey= ()=>{
+
+    let url='http://localhost:8080/api/pubkey'
+    fetch(url,{
+        method:'GET',
+        headers:{
+          'Content-Type':'text/plain',
+        },
+        mode:'cors'
+    }).then(res=>res.text()).then(data=>{
+        console.log(data);
+        setPublicKey(data);
+    })
+  }
+
+  useEffect(() => {
+    getPublicKey(); // 在组件渲染时调用 getPublicKey
+  }, []);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const nevigate =useNavigate();
@@ -13,7 +34,7 @@ const LoginForm = () => {
     
     const loginData = {
       username: username,
-      password: password,
+      password: publicKey + password,
     };
 
     //發送port請求將數據傳遞給後端API
@@ -42,6 +63,7 @@ const LoginForm = () => {
   return (
     <form className="custom-body reservation-form1" onSubmit={handleSubmit}>
       <h2>用戶登錄</h2>
+      <p>Public Key: {publicKey}</p>
       <label>
         用戶名：
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
