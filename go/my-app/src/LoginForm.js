@@ -1,6 +1,7 @@
 import React, {  useState ,useEffect} from 'react';
 import './LoginForm.css'; // 导入自定义的 CSS 样式
 import { useNavigate } from 'react-router-dom';
+import JSEncrypt from 'jsencrypt'
  
 const LoginForm = () => {
   const [publicKey,setPublicKey] = useState('');
@@ -32,9 +33,12 @@ const LoginForm = () => {
     e.preventDefault();
     //處理登錄表單提交邏輯
     
+    const encrypt = new JSEncrypt()
+    encrypt.setPublicKey(publicKey)
+
     const loginData = {
       username: username,
-      password: publicKey + password,
+      password: encrypt.encrypt(password),
     };
 
     //發送port請求將數據傳遞給後端API
