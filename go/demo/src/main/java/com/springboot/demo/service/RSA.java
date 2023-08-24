@@ -1,5 +1,6 @@
 package com.springboot.demo.service;
 
+import com.springboot.demo.base.base;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ import java.security.SecureRandom;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 @Component
-public class RSA {
+public class RSA extends base {
     private RSAPublicKey publicKey;
     private RSAPrivateKey privateKey;
 
@@ -59,6 +60,10 @@ public class RSA {
         } catch (InvalidKeyException | java.security.InvalidKeyException e) {
             e.printStackTrace();
         }
+
+        getLogData().setProgramName(this.getClass().getSimpleName());
+        getLogData().setMessage("驗證密碼");
+        logMessage(getLogData());
         return outStr;
     }
 }

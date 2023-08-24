@@ -1,10 +1,13 @@
 package com.springboot.demo.controller;
 
+import com.springboot.demo.base.LogData;
+import com.springboot.demo.base.base;
 import com.springboot.demo.model.ApiResponse;
 import com.springboot.demo.model.User;
 import com.springboot.demo.service.RSA;
 import com.springboot.demo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class UserController extends base {
     @Autowired(required = false)
     private UserService userService;
 
     @Autowired(required = false)
     private RSA rsa;
-
 
     private static ApplicationContext applicationContext;
 
@@ -26,6 +28,10 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody User loginData) {
         String username = loginData.getUserName();
         String password = loginData.getPassword();
+
+        getLogData().setProgramName(this.getClass().getSimpleName());
+        getLogData().setMessage(StringUtils.join("UserName is:",username));
+        logMessage(getLogData());
 
         String realPassword = rsa.decrypt(password);
         User user = null;
@@ -35,10 +41,16 @@ public class UserController {
         if(user != null){
             ApiResponse response= new ApiResponse(true,"登錄成功");
             System.out.println("成功");
+            getLogData().setProgramName(this.getClass().getSimpleName());
+            getLogData().setMessage("驗證成功");
+            logMessage(Level.DEBUG,getLogData());
             return ResponseEntity.ok().body(response);
         }else{
             System.out.println("失敗");
-             return  null;
+            getLogData().setProgramName(this.getClass().getSimpleName());
+            getLogData().setMessage("驗證失敗");
+            logMessage(Level.DEBUG,getLogData());
+            return  null;
         }
 //        if ("admin".equals(username) && "password".equals(password)) {
 //            ApiResponse response= new ApiResponse(true,"登錄成功");
