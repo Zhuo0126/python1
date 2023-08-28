@@ -5,14 +5,10 @@
     <resultMap id="userResultMap" type="com.springboot.demo.model.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
-        <result column="username" property="username"/>
+        <result column="password" property="password"/>
     </resultMap>
 
-    <select id="findByUsername" resultMap="userResultMap">
+    <select id="findByUserName" resultMap="userResultMap">
         SELECT * FROM User WHERE username = #{username} and password= #{password}
     </select>
-
-<!--    <select id="findAll" resultMap="userResultMap">-->
-<!--        SELECT * FROM user-->
-<!--    </select>-->
 </mapper>

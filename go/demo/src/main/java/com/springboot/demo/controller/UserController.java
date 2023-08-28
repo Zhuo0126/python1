@@ -3,7 +3,9 @@ package com.springboot.demo.controller;
 import com.springboot.demo.base.LogData;
 import com.springboot.demo.base.base;
 import com.springboot.demo.model.ApiResponse;
+import com.springboot.demo.model.Login;
 import com.springboot.demo.model.User;
+import com.springboot.demo.service.LoginService;
 import com.springboot.demo.service.RSA;
 import com.springboot.demo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -13,11 +15,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/api")
 public class UserController extends base {
     @Autowired(required = false)
     private UserService userService;
+
+
+    @Autowired(required = false)
+    private LoginService loginService;
 
     @Autowired(required = false)
     private RSA rsa;
@@ -44,7 +52,19 @@ public class UserController extends base {
             getLogData().setProgramName(this.getClass().getSimpleName());
             getLogData().setMessage("驗證成功");
             logMessage(Level.DEBUG,getLogData());
-            return ResponseEntity.ok().body(response);
+
+            //檢核成功後，取得menu資料
+            String UserID ="";
+            switch(user.getUserName()){
+                case "admin":
+                    UserID ="1";
+                    break;
+            }
+            ArrayList<Login> login = loginService.select(UserID);
+
+            if(login != null){
+                return ResponseEntity.ok().body(response);
+            }
         }else{
             System.out.println("失敗");
             getLogData().setProgramName(this.getClass().getSimpleName());
@@ -58,6 +78,7 @@ public class UserController extends base {
 //        } else {
 //            return null; // 登錄失敗返回null
 //        }
+        return null;
     }
 
     @GetMapping("/pubkey")
