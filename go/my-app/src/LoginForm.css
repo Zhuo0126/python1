@@ -8,6 +8,20 @@
   color :indigo;
 }
 
+.main-container {
+  display: flex; /* 使用 Flexbox 布局 */
+}
+.left-section, .right-section {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+
+.title {
+  font-size :30px;
+}
+
 .reservation-form1 {
   border: 10px solid #ccc;
   padding: 20px;

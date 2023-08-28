@@ -54,7 +54,7 @@ const LoginForm = () => {
       console.log(data);
 
       if (data.success) {
-        nevigate('/reservation');
+        nevigate('/menu');
       } else {
         
       }
@@ -65,9 +65,11 @@ const LoginForm = () => {
   };
 
   return (
+    <div className="main-container">
+      <div className="left-section">
     <form className="custom-body reservation-form1" onSubmit={handleSubmit}>
+      <h1 className="title">HOME(主頁)</h1>
       <h2>用戶登錄</h2>
-      <p>Public Key: {publicKey}</p>
       <label>
         用戶名：
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -80,6 +82,25 @@ const LoginForm = () => {
       <br />
       <button type="submit">登錄</button>
     </form>
+    </div>
+    <div className="right-section">
+    <form className="custom-body reservation-form1" onSubmit={handleSubmit}>
+      <h1 className="title">HOME2(主頁)</h1>
+      <h2>用戶註冊</h2>
+      <label>
+        用戶名：
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        密碼：
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </label>
+      <br />
+      <button type="submit">註冊</button>
+    </form>
+    </div>
+    </div>
   );
 };
 
