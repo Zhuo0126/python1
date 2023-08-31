@@ -47,7 +47,7 @@ public class UserController extends base {
             user = userService.addMember(username, realPassword);
         }
         if(user != null){
-            ApiResponse response= new ApiResponse(true,"登錄成功");
+//            ApiResponse response= new ApiResponse(true,"登錄成功");
             System.out.println("成功");
             getLogData().setProgramName(this.getClass().getSimpleName());
             getLogData().setMessage("驗證成功");
@@ -63,7 +63,7 @@ public class UserController extends base {
             ArrayList<Login> login = loginService.select(UserID);
 
             if(login != null){
-                return ResponseEntity.ok().body(response);
+                return ResponseEntity.ok().body(login);
             }
         }else{
             System.out.println("失敗");

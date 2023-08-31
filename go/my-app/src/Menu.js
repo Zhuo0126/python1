@@ -1,14 +1,18 @@
-import {Link} from 'react-router-dom';
+import {Link,useLocation} from 'react-router-dom';
 
 
-const Menu = () => {
+const Menu = ({menuItems}) => {
+  const location = useLocation();
+  const data =location.state;
   return (
     <div>
       <nav>
       <ul>
-          <li>
-            <Link to="/reservation">預約</Link>
+        {data.map((item,index) =>(
+          <li key={index}>
+            <Link to ={item.resourceurl}>{item.resourcename}{index +1}</Link>
           </li>
+        ))}
         </ul>
       </nav>
   </div>

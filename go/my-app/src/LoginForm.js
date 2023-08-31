@@ -1,5 +1,5 @@
 import React, {  useState ,useEffect} from 'react';
-import './LoginForm.css'; // 导入自定义的 CSS 样式
+import './LoginForm.css'; 
 import { useNavigate } from 'react-router-dom';
 import JSEncrypt from 'jsencrypt'
  
@@ -40,7 +40,7 @@ const LoginForm = () => {
       username: username,
       password: encrypt.encrypt(password),
     };
-
+    
     //發送port請求將數據傳遞給後端API
     fetch('http://localhost:8080/api/login',{
       method :'POST',
@@ -51,13 +51,9 @@ const LoginForm = () => {
     })
     .then((response) => response.json())
     .then((data) => {
+  
       console.log(data);
-
-      if (data.success) {
-        nevigate('/menu');
-      } else {
-        
-      }
+      nevigate("/menu",{state:data});
     })
     .catch((error) => {
       console.error('請求出錯:',error)
