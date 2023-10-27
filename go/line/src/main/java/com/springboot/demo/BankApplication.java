@@ -22,6 +22,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 @SpringBootApplication
@@ -30,9 +31,17 @@ public class BankApplication {
 
 
     public static void main(String[] args) throws IOException {
-        String pdfFilePath = "D:/TXTT/PDF/test.pdf";
-        String saveFile = "D:/TXTT/PDF/test1.pdf";
-        String password = "J221694941"; // 设置PDF文件的密码
+        //參數檔
+        Properties properties = new Properties();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("./pdf.properties"));
+        properties.load(bufferedReader);
+
+        String pdfFilePath = properties.getProperty("pdfFilePath");
+        String saveFile = properties.getProperty("saveFile");
+        String password = properties.getProperty("password");
+        String xlsxName = properties.getProperty("xlsxName");
+        System.out.println("成功取得參數");
+
         String txt = "";
         List<String> list=null;
 
@@ -41,15 +50,19 @@ public class BankApplication {
             PDDocument document = PDDocument.load(new File(pdfFilePath), password);
             document.setAllSecurityToBeRemoved(true);
             document.save(saveFile);
+            System.out.println("成功備份且解密");
 
             //讀取pdf並做資料整理
             txt = readRectangle(saveFile);
+            System.out.println("成功讀取pdf");
 
             //逐行讀取
             list = List(txt);
+            System.out.println("成功取得所需資料");
 
             //處理資料
-            sortdata(list);
+            sortdata(list,xlsxName);
+            System.out.println("成功產生xlsx");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -57,10 +70,10 @@ public class BankApplication {
             throw new RuntimeException(e);
         }
     }
-    public static void sortdata(List<String> list) throws IOException {
+    public static void sortdata(List<String> list,String xlsxName) throws IOException {
         InnerClass inner =new InnerClass();
         int rollNum = 0;
-        String rt ="D:/TXTT/xlsx/test.xlsx";
+        String rt = xlsxName;
         FileOutputStream fileOutputStream = new FileOutputStream(rt);
         Workbook workbook =new XSSFWorkbook();
         Sheet sheet =workbook.createSheet("Bank");
@@ -126,15 +139,15 @@ public class BankApplication {
             //收入/費用分類
             String s = "";
             String m = "";
-            String m1="";
+            Double m1 = null;
             if(inner.second_3.contains("\u00A0") && StringUtils.isNotBlank(inner.second_4)){
                 s="收入";
                 m=inner.second_4;
-                m1="+"+m;
+                m1=Double.parseDouble(m.replace(",",""));
             } else if (inner.second_4.contains("\u00A0") && StringUtils.isNotBlank(inner.second_3)) {
                 s="費用";
                 m=inner.second_3;
-                m1="-"+m;
+                m1=Double.parseDouble(m.replace(",","")) * (-1);
             }
 
             //附註
@@ -143,6 +156,9 @@ public class BankApplication {
                 remark=inner.second_6;
             }else{
                 remark=inner.first_2+ inner.third_2;
+                if(remark.trim().equals("nullnull")){
+                    remark = "";
+                }
             }
 
             //摘要
@@ -158,16 +174,22 @@ public class BankApplication {
                     case "行動跨轉":
                         p1 = Pattern.compile(".*0000612030199391.*");
                         p2 = Pattern.compile(".*0000011368001175.*");
+                        p3 = Pattern.compile(".*0000369532427300.*");
+                        p4 = Pattern.compile(".*82120000027248.*");
 
                         if(p1.matcher(remark).find()){
                             main = "外勞看護費";
                         } else if (p2.matcher(remark).find()) {
                             main = "家用短期應收帳款";
+                        }else if (p3.matcher(remark).find()) {
+                            main = "醫療_李林玉葉";
+                        }else if (p4.matcher(remark).find()) {
+                            main = "醫療_李林玉葉";
                         }
                         break;
                     case "行動自轉":
-                        p1 = Pattern.compile(".*82120000027248.*");
-                        p2 = Pattern.compile(".*0000369532427300.*");
+                        p1 = Pattern.compile(".*0000369532427300.*");
+                        p2 = Pattern.compile(".*82120000027248.*");
 
                         if(p1.matcher(remark).find()){
                             main = "醫療_李林玉葉";
@@ -278,11 +300,12 @@ public class BankApplication {
             if(StringUtils.isNotBlank(inner.second_1)){
                 String[] parts = inner.second_1.split("/");
                 if (parts.length >= 2) {
-                    month = parts[1];
+                    month = String.valueOf(Double.parseDouble(parts[1]));
+
                 }
             }
 
-            String[] body = {inner.second_1,"家用短期帳戶-李俊龍",s,main,m1,inner.second_5,"",remark,month};
+            String[] body = {inner.second_1,"家用短期帳戶-李俊龍",s,main,String.valueOf(m1),inner.second_5,"",remark,month};
             cellStyle =workbook.createCellStyle();
             cellStyle.setAlignment(HorizontalAlignment.LEFT);
             cellStyle.setWrapText(false);
