@@ -20,6 +20,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.*;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -33,13 +36,17 @@ public class BankApplication {
     public static void main(String[] args) throws IOException {
         //參數檔
         Properties properties = new Properties();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("./pdf.properties"));
-        properties.load(bufferedReader);
+        InputStream input = new FileInputStream("./pdf.properties");
+        InputStreamReader reader = new InputStreamReader(input, "UTF-8");
+//        BufferedReader bufferedReader = new BufferedReader(new FileReader("./pdf.properties"));
+        properties.load(reader);
 
         String pdfFilePath = properties.getProperty("pdfFilePath");
         String saveFile = properties.getProperty("saveFile");
         String password = properties.getProperty("password");
+        String xlsxUrl = properties.getProperty("xlsxUrl");
         String xlsxName = properties.getProperty("xlsxName");
+        Boolean autoName = Boolean.parseBoolean(properties.getProperty("autoName"));
         System.out.println("成功取得參數");
 
         String txt = "";
@@ -61,7 +68,7 @@ public class BankApplication {
             System.out.println("成功取得所需資料");
 
             //處理資料
-            sortdata(list,xlsxName);
+            sortdata(list,xlsxUrl,xlsxName,autoName);
             System.out.println("成功產生xlsx");
 
         } catch (IOException e) {
@@ -70,10 +77,17 @@ public class BankApplication {
             throw new RuntimeException(e);
         }
     }
-    public static void sortdata(List<String> list,String xlsxName) throws IOException {
+    public static void sortdata(List<String> list,String xlsxUrl,String xlsxName,Boolean autoName) throws IOException {
         InnerClass inner =new InnerClass();
         int rollNum = 0;
-        String rt = xlsxName;
+        String rt ="";
+        if(autoName){
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuuMM");
+            rt=xlsxUrl+currentDate.format(formatter)+"_Bill.xlsx";
+        }else{
+            rt =xlsxUrl+xlsxName;
+        }
         FileOutputStream fileOutputStream = new FileOutputStream(rt);
         Workbook workbook =new XSSFWorkbook();
         Sheet sheet =workbook.createSheet("Bank");
@@ -172,23 +186,20 @@ public class BankApplication {
             if(s.equals("費用")){
                 switch (inner.second_2.trim()){
                     case "行動跨轉":
-                        p1 = Pattern.compile(".*0000612030199391.*");
-                        p2 = Pattern.compile(".*0000011368001175.*");
-                        p3 = Pattern.compile(".*0000369532427300.*");
-                        p4 = Pattern.compile(".*82120000027248.*");
+                        p1 = Pattern.compile(".*612030199391.*");
+                        p2 = Pattern.compile(".*369532427300.*");
+                        p3 = Pattern.compile(".*82120000027248.*");
 
                         if(p1.matcher(remark).find()){
                             main = "外勞看護費";
-                        } else if (p2.matcher(remark).find()) {
-                            main = "家用短期應收帳款";
-                        }else if (p3.matcher(remark).find()) {
+                        }else if (p2.matcher(remark).find()) {
                             main = "醫療_李林玉葉";
-                        }else if (p4.matcher(remark).find()) {
+                        }else if (p3.matcher(remark).find()) {
                             main = "醫療_李林玉葉";
                         }
                         break;
                     case "行動自轉":
-                        p1 = Pattern.compile(".*0000369532427300.*");
+                        p1 = Pattern.compile(".*369532427300.*");
                         p2 = Pattern.compile(".*82120000027248.*");
 
                         if(p1.matcher(remark).find()){
@@ -268,7 +279,8 @@ public class BankApplication {
                         p=Double.parseDouble(m.replace(",",""));
 
                         if (p1.matcher(remark).find()) {
-                            main = "李俊龍家用("+p+")";
+                            DecimalFormat df = new DecimalFormat("#");
+                            main = "李俊龍家用("+df.format(p)+")";
                         }
                         break;
                     case "ＣＤ轉收":
@@ -300,24 +312,62 @@ public class BankApplication {
             if(StringUtils.isNotBlank(inner.second_1)){
                 String[] parts = inner.second_1.split("/");
                 if (parts.length >= 2) {
-                    month = String.valueOf(Double.parseDouble(parts[1]));
+                    month = String.valueOf(Integer.valueOf(parts[1]));
 
                 }
             }
 
-            String[] body = {inner.second_1,"家用短期帳戶-李俊龍",s,main,String.valueOf(m1),inner.second_5,"",remark,month};
+            //特殊條件
+            p1 = Pattern.compile(".*富邦信用卡.*");
+            p2 = Pattern.compile(".*00206269");
+            p3 = Pattern.compile(".*00209099");
+            p4 = Pattern.compile(".*11578387368.*");
+            p5 = Pattern.compile(".*11368001175.*");
+            if(p1.matcher(remark).find() || p4.matcher(remark).find()
+                    || p5.matcher(remark).find() ){
+                main = "家用短期應收帳款";
+            }else if(p2.matcher(remark).find()){
+                main = "家用醫療帳戶";
+            } else if (p3.matcher(remark).find()) {
+                main = "家用長期帳戶-李宥樺";
+            }
+
+            //特殊金流分類
+            if(main.equals("家用醫療帳戶") || main.equals("家用長期帳戶-李宥樺")
+                    || main.equals("家用現金")){
+                s="內轉";
+            } else if (main.equals("家用短期應收帳款")) {
+                s="內轉-信用卡";
+            }
+
+
+            String[] body = {inner.second_1,"家用短期帳戶-李俊龍",s,main,String.valueOf(m1),inner.second_5.replace(",",""),"",remark,month};
             cellStyle =workbook.createCellStyle();
             cellStyle.setAlignment(HorizontalAlignment.LEFT);
             cellStyle.setWrapText(false);
             for(int x=0;x<body.length;x++){
                 Cell cell =row.createCell(x);
-                cell.setCellValue(body[x]);
+                if(x==4 || x==5 || x ==8){
+                    cell.setCellValue(Double.parseDouble(body[x]));
+                }else{
+                    cell.setCellValue(body[x]);
+                }
                 cell.setCellStyle(cellStyle);
             }
             i=i+=3;
         }
         workbook.write(fileOutputStream);
         fileOutputStream.close();
+    }
+
+    //內轉類別
+    private static String setDetails(String s, double m1) {
+        if (m1 > 0) {
+            s = "內轉";
+        } else {
+            s = "內轉-信用卡";
+        }
+        return s;
     }
 
     public static class InnerClass {

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.springboot</groupId>
-	<artifactId>line</artifactId>
+	<artifactId>pdf</artifactId>
 	<version>01</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
@@ -22,36 +22,36 @@
 			<artifactId>line-bot-spring-boot</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>mysql</groupId>-->
+<!--			<artifactId>mysql-connector-java</artifactId>-->
+<!--			<version>8.0.33</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>3.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.5.13</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>3.0.2</version>
-		</dependency>
-		<dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-        </dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.mybatis.spring.boot</groupId>-->
+<!--			<artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--			<version>3.0.2</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.mybatis</groupId>-->
+<!--			<artifactId>mybatis</artifactId>-->
+<!--			<version>3.5.13</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.mybatis</groupId>-->
+<!--			<artifactId>mybatis-spring</artifactId>-->
+<!--			<version>3.0.2</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.33</version>-->
+<!--        </dependency>-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -66,10 +66,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jdbc</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-jdbc</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -107,6 +107,36 @@
 		</dependency>
 	</dependencies>
 
+	<!-- 一包jar for PDF功能-->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>shade-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<shadedClassifierName>uber</shadedClassifierName>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>com.springboot.demo.BankApplication</Main-Class>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<!-- 一包jar -->
 <!--	<build>-->
 <!--		<plugins>-->

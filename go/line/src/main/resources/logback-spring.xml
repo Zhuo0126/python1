@@ -3,7 +3,7 @@
 	<springProperty scope="context" name="spring.fep.log.jdbc.sqltiming.level" source="spring.fep.log.jdbc.sqltiming.level" defaultValue="DEBUG"/>
 	<springProperty scope="context" name="spring.fep.log.mybatis.level" source="spring.fep.log.mybatis.level" defaultValue="DEBUG"/>
 
-	<property name="LOG_HOME" value="./logs" />
+	<property name="LOG_HOME" value="D:/TXTT/joseph/logs" />
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
