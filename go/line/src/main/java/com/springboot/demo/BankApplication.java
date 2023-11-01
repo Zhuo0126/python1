@@ -42,6 +42,7 @@ public class BankApplication {
         properties.load(reader);
 
         String pdfFilePath = properties.getProperty("pdfFilePath");
+        String pdfFileName = properties.getProperty("pdfFileName");
         String saveFile = properties.getProperty("saveFile");
         String password = properties.getProperty("password");
         String xlsxUrl = properties.getProperty("xlsxUrl");
@@ -49,12 +50,22 @@ public class BankApplication {
         Boolean autoName = Boolean.parseBoolean(properties.getProperty("autoName"));
         System.out.println("成功取得參數");
 
+        String pdfFile="";
+        if(autoName){
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuuMM");
+            pdfFileName= currentDate.format(formatter)+"富邦帳單.pdf";
+
+            pdfFile=pdfFilePath+pdfFileName;
+        }else{
+            pdfFile=pdfFilePath+pdfFileName;
+        }
         String txt = "";
         List<String> list=null;
 
         try {
             //解密pdf後另存為不須密碼的pdf
-            PDDocument document = PDDocument.load(new File(pdfFilePath), password);
+            PDDocument document = PDDocument.load(new File(pdfFile), password);
             document.setAllSecurityToBeRemoved(true);
             document.save(saveFile);
             System.out.println("成功備份且解密");

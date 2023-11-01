@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.springboot</groupId>
-	<artifactId>pdf</artifactId>
+	<artifactId>email</artifactId>
 	<version>01</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
@@ -105,9 +105,14 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>5.2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
 	</dependencies>
 
-	<!-- 一包jar for PDF功能-->
+	<!-- 一包jar for Mail取檔功能-->
 	<build>
 		<plugins>
 			<plugin>
@@ -127,7 +132,7 @@
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>com.springboot.demo.BankApplication</Main-Class>
+										<Main-Class>com.springboot.demo.MailApplication</Main-Class>
 									</manifestEntries>
 								</transformer>
 							</transformers>
@@ -137,6 +142,36 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!-- 一包jar for PDF功能-->
+<!--	<build>-->
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-shade-plugin</artifactId>-->
+<!--				<version>3.3.0</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>shade-jar-with-dependencies</id>-->
+<!--						<phase>package</phase>-->
+<!--						<goals>-->
+<!--							<goal>shade</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<shadedArtifactAttached>true</shadedArtifactAttached>-->
+<!--							<shadedClassifierName>uber</shadedClassifierName>-->
+<!--							<transformers>-->
+<!--								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+<!--									<manifestEntries>-->
+<!--										<Main-Class>com.springboot.demo.BankApplication</Main-Class>-->
+<!--									</manifestEntries>-->
+<!--								</transformer>-->
+<!--							</transformers>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+<!--	</build>-->
 	<!-- 一包jar -->
 <!--	<build>-->
 <!--		<plugins>-->

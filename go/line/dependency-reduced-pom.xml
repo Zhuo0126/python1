@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.springboot</groupId>
-  <artifactId>pdf</artifactId>
+  <artifactId>email</artifactId>
   <name>demo</name>
   <version>01</version>
   <description>Demo project for Spring Boot</description>
@@ -30,7 +30,7 @@
               <transformers>
                 <transformer>
                   <manifestEntries>
-                    <Main-Class>com.springboot.demo.BankApplication</Main-Class>
+                    <Main-Class>com.springboot.demo.MailApplication</Main-Class>
                   </manifestEntries>
                 </transformer>
               </transformers>
@@ -155,6 +155,12 @@
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
       <version>5.2.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.2</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
