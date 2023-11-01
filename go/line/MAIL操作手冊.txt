@@ -12,17 +12,16 @@ https://www.oracle.com/java/technologies/downloads/#jdk17-windows
 執行-java -version
 
 6.調整pdf.properties
-pdfFilePath=加密pdf位置
-saveFile=備份pdf位置
-password=解密密碼
-xlsxUrl=xlsx產生位置
-xlsxName=xlsx檔名
-autoName=true(取當下月份產檔)  false(取xlsxName)
+emailPDFPath=email抓下來pdf檔位置
+day=當下時間往前幾天的信
+username=asz90406@gmail.com(信箱名稱)
+password=fjsi tjtn lvvi uaba(應用密碼，需要去信箱應用程式密碼申請)
+main=台北富邦銀行帳戶資訊匯出通知(所需要取的信主旨)
 
-7.執行makePDF.exe
+7.執行mail.exe
 
 //以下不需要
 #.cd 到jar檔資料夾 
-例如:jar放在C:/TEST/pdf-01-uber.jar
+例如:jar放在C:/TEST/email-01-uber.jar
 執行:cd C:/TEST
-執行:java -jar pdf-01-uber.jar
+執行:java -jar email-01-uber.jar
