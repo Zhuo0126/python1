@@ -25,10 +25,10 @@ import java.util.List;
 
 @SpringBootApplication
 public class MergeApplication {
-	private static final String SPREADSHEET_ID = "1Xv7Yp00z7kLekujOfioWDe8vaRyei2iJPgaYMOah_bE";
-	private static final String RANGE = "工作表1"; // 你的表单名称或范围
+	private static final String SPREADSHEET_ID = "1Xv7Yp00z7kLekujOfioWDe8vaRyei2iJPgaYMOah_bE"; //google doc url
+	private static final String RANGE = "工作表1"; // 表單名稱
 	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-	private static final String CREDENTIALS_FILE_PATH = "/client_secret_1027740326913-e9p447p5gf2aih4q97rrlc0g6q7d4ei7.apps.googleusercontent.com.json";
+	private static final String CREDENTIALS_FILE_PATH = "/client_secret_1027740326913-e9p447p5gf2aih4q97rrlc0g6q7d4ei7.apps.googleusercontent.com.json"; //json憑證
 	private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 	private static final String TOKENS_DIRECTORY_PATH = "tokens";
 	private static final String APPLICATION_NAME = "Joseph";
@@ -49,6 +49,7 @@ public class MergeApplication {
 		Sheets service = new Sheets.Builder(HTTP_TRANSPORT,JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
 				.setApplicationName(APPLICATION_NAME)
 				.build();
+		//取得google doc資料位置
 		ValueRange response = service.spreadsheets().values()
 				.get(SPREADSHEET_ID, RANGE)
 				.execute();
@@ -68,7 +69,7 @@ public class MergeApplication {
 	}
 
 	private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-		// Load client secrets.
+		// 讀憑證
 		InputStream in = MergeApplication.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
 		if (in == null) {
 			throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
