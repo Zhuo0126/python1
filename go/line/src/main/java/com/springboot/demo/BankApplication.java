@@ -24,6 +24,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -353,13 +354,28 @@ public class BankApplication {
 
 
             String[] body = {inner.second_1,"家用短期帳戶-李俊龍",s,main,String.valueOf(m1),inner.second_5.replace(",",""),"",remark,month};
-            cellStyle =workbook.createCellStyle();
-            cellStyle.setAlignment(HorizontalAlignment.LEFT);
-            cellStyle.setWrapText(false);
+//            cellStyle =workbook.createCellStyle();
+//            cellStyle.setAlignment(HorizontalAlignment.LEFT);
+//            cellStyle.setWrapText(false);
+            CreationHelper createHelper = workbook.getCreationHelper();
+
             for(int x=0;x<body.length;x++){
                 Cell cell =row.createCell(x);
+                CellStyle cellStyle1 =workbook.createCellStyle();
+                cellStyle =workbook.createCellStyle();
+                cellStyle.setAlignment(HorizontalAlignment.LEFT);
+                cellStyle.setWrapText(false);
                 if(x==4 || x==5 || x ==8){
                     cell.setCellValue(Double.parseDouble(body[x]));
+                }else if(x==0){
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                    LocalDate localDate = LocalDate.parse(body[x], formatter);
+                    Date date = java.sql.Date.valueOf(localDate);
+
+                    // 對於 x == 0，應用日期格式
+                    cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/mm/dd"));
+                    cell.setCellStyle(cellStyle);
+                    cell.setCellValue(date);
                 }else{
                     cell.setCellValue(body[x]);
                 }
