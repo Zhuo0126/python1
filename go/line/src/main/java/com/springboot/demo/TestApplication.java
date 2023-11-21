@@ -4,13 +4,18 @@ import com.springboot.demo.model.Login;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class TestApplication {
+import java.util.Timer;
+import java.util.TimerTask;
 
+@SpringBootApplication
+public class TestApplication extends TimerTask {
+
+	public void run(){
+		System.out.println("Timer task executed!");
+	}
 	public static void main(String[] args) {
-		Login login =new Login();
-		login.setID(1);
-		login.setRESOURCENAME("test");
-		System.out.println("ID="+login.getID()+", ResourceName="+login.getRESOURCENAME());
+		Timer timer = new Timer();
+
+		timer.schedule(new TestApplication(),2000,2000);
 	}
 }

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.springboot</groupId>
-	<artifactId>email</artifactId>
+	<artifactId>pdf</artifactId>
 	<version>01</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
@@ -203,35 +203,35 @@
 <!--		</plugins>-->
 <!--	</build>-->
 	<!-- 一包jar for PDF功能-->
-<!--	<build>-->
-<!--		<plugins>-->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-shade-plugin</artifactId>-->
-<!--				<version>3.3.0</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>shade-jar-with-dependencies</id>-->
-<!--						<phase>package</phase>-->
-<!--						<goals>-->
-<!--							<goal>shade</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<shadedArtifactAttached>true</shadedArtifactAttached>-->
-<!--							<shadedClassifierName>uber</shadedClassifierName>-->
-<!--							<transformers>-->
-<!--								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
-<!--									<manifestEntries>-->
-<!--										<Main-Class>com.springboot.demo.BankApplication</Main-Class>-->
-<!--									</manifestEntries>-->
-<!--								</transformer>-->
-<!--							</transformers>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
-<!--		</plugins>-->
-<!--	</build>-->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>shade-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<shadedClassifierName>uber</shadedClassifierName>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>com.springboot.demo.BankApplication</Main-Class>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<!-- 一包jar -->
 <!--	<build>-->
 <!--		<plugins>-->
