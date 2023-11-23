@@ -60,8 +60,8 @@ public class LunchApplication {
 		String randomEatElement = eatList.get(randomEatIndex);
 		String randomDrinkElement = waterList.get(randomDrinkIndex);
 
-		System.out.println(randomEatElement);
-		System.out.println(randomDrinkElement);
+		System.out.println("食物:"+randomEatElement);
+		System.out.println("飲料:"+randomDrinkElement);
 
 		if(today == DayOfWeek.MONDAY){
 			// 移除已選的元素
