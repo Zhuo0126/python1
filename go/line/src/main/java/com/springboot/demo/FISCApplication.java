@@ -33,7 +33,7 @@ public class FISCApplication {
 					// 在這裡處理每一行的內容
 					String[] t = line.split("\\|");
 
-					// 判斷UUID是否相等
+					// 判斷EJ是否相等
 					if (EJ.equals(t[6].trim())) {
 						if (id.indexOf(t[10].trim()) >= 0) {
 							System.out.println(line);
