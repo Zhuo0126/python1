@@ -126,7 +126,11 @@
 			<artifactId>google-oauth-client-jetty</artifactId>
 			<version>1.30.6</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-main</artifactId>
+			<version>25.2</version>
+		</dependency>
 		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-sheets</artifactId>
@@ -143,7 +147,11 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.14.3</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.maps</groupId>
+			<artifactId>google-maps-services</artifactId>
+			<version>0.15.0</version> <!-- 最新版本请参考官方文档 -->
+		</dependency>
 		<!-- WebDriver -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -157,7 +165,23 @@
 		</dependency>
 
 	</dependencies>
-
+	<!--加入osgeo的倉庫位址 -->
+	<repositories>
+		<repository>
+			<id>osgeo</id>
+			<name>OSGeo Release Repository</name>
+			<url>https://repo.osgeo.org/repository/release/</url>
+			<snapshots><enabled>false</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+		</repository>
+		<repository>
+			<id>osgeo-snapshot</id>
+			<name>OSGeo Snapshot Repository</name>
+			<url>https://repo.osgeo.org/repository/snapshot/</url>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>false</enabled></releases>
+		</repository>
+	</repositories>
 	<!-- test-->
 <!--	<build>-->
 <!--		<plugins>-->
