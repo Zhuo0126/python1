@@ -31,16 +31,10 @@ public class AHPApplication {
 				{c/a,c/b,1,c/d},
 				{d/a,d/b,d/c,1}
 		};
-
-//		double[][] matrix = {
-//				{1		 , 7.0/ 5.0, 7.0/3.0 , 7},
-//				{5.0/7.0 , 1	   , 5.0/3.0 , 5},
-//				{3.0/7.0 ,  3.0/5.0, 1       , 3 },
-//				{1.0/7.0  , 1.0/5.0 ,1.0/ 3.0 , 1 }
-//		};
-
 		//AHP換算
 		AHP(matrix);
+
+		//
 	}
 
 	private static void AHP(double[][] matrix){
