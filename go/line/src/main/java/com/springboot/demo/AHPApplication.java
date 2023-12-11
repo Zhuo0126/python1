@@ -8,9 +8,7 @@ import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 import org.apache.commons.math3.linear.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 @SpringBootApplication

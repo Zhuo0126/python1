@@ -1,12 +1,7 @@
 package com.springboot.demo;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.DayOfWeek;
