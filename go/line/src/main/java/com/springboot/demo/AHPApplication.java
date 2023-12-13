@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.IOException;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class AHPApplication {
 	public static void main(String[] args) throws Exception {
 

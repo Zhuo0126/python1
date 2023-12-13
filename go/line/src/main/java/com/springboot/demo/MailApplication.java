@@ -16,7 +16,7 @@ import javax.mail.search.ComparisonTerm;
 import javax.mail.search.ReceivedDateTerm;
 import javax.mail.search.SearchTerm;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class MailApplication {
 
     public static void main(String[] args) throws IOException {

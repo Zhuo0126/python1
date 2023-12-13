@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class CrawlerApplication {
 
     public static void main(String[] args) {
         String url = "https://docs.google.com/spreadsheets/d/1Xv7Yp00z7kLekujOfioWDe8vaRyei2iJPgaYMOah_bE/edit?pli=1#gid=0";
         EdgeOptions edgeOptions = new EdgeOptions();
         // 允许所有请求（允许浏览器通过远程服务器访问不同源的网页，即跨域访问）
-        edgeOptions.addArguments("--remote-allow-origins=*");
+//        edgeOptions.addArguments("--remote-allow-origins=*");
         System.setProperty("webdriver.edge.driver", "/TXTT/driver/msedgedriver.exe");
 
         EdgeDriver edgeDriver = new EdgeDriver(edgeOptions);

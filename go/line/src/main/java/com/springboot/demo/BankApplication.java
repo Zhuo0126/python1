@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class BankApplication {
     private static Boolean change =false;
 

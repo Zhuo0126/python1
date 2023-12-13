@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class LunchApplication {
 	private static Properties properties = new Properties();
 

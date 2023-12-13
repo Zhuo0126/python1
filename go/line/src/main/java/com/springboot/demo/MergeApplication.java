@@ -23,7 +23,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class MergeApplication {
 	private static final String SPREADSHEET_ID = "1Xv7Yp00z7kLekujOfioWDe8vaRyei2iJPgaYMOah_bE"; //google doc url
 	private static final String RANGE = "工作表1"; // 表單名稱

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TimerApplication extends TimerTask {
 
 	public void run(){

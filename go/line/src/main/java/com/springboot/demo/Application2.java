@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class Application2 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
