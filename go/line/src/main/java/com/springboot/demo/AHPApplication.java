@@ -9,25 +9,34 @@ import com.google.maps.model.TravelMode;
 import org.apache.commons.math3.linear.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //@SpringBootApplication
 public class AHPApplication {
 	public static void main(String[] args) throws Exception {
-
+		ArrayList<Double> distanceWeights = new ArrayList<>();
+		ArrayList<Double> payWeights = new ArrayList<>();
+		ArrayList<Double> rankWeights = new ArrayList<>();
+		ArrayList<Double> chooseWeights = new ArrayList<>();
+		ArrayList<Double> variableWeights = new ArrayList<>();
 
 		Scanner scanner =new Scanner(System.in);
 		System.out.println("請輸入居住地:");
 
 		//1.計算地點權重
 		String location1 = scanner.nextLine();
-		distance(location1);
+		System.out.println("地點權重");
+		distanceWeights = distance(location1,distanceWeights);
 
 		//2計算學費權重
-		pay();
+		System.out.println("學費權重");
+		payWeights = pay(payWeights);
 
 		//3計算學校排名權重
-		rank();
+		System.out.println("學校排名權重");
+		rankWeights =rank(rankWeights);
 
 		//4科系喜好程度
 		System.out.println("請輸入科系喜好程度偏好程度資管,統計,資工,分數越高越重要(1~9),請使用逗號分隔");
@@ -41,7 +50,8 @@ public class AHPApplication {
 				{bb/aa,1,bb/cc},
 				{cc/aa,cc/bb,1}
 		};
-		AHP(matrix0);
+		System.out.println("科系喜好權重");
+		chooseWeights = AHP(matrix0,chooseWeights);
 
 
 		System.out.println("請輸入地點,學費,學校排名,科系喜好程度偏好程度,分數越高越重要(1~9),請使用逗號分隔");
@@ -58,11 +68,32 @@ public class AHPApplication {
 				{c/a,c/b,1,c/d},
 				{d/a,d/b,d/c,1}
 		};
+		System.out.println("變數權重");
 		//AHP換算
-		AHP(matrix);
+		variableWeights = AHP(matrix,variableWeights);
+
+		//計算權重
+		Double first=variableWeights.get(0).doubleValue() * distanceWeights.get(0).doubleValue()
+				+variableWeights.get(1).doubleValue() * payWeights.get(0).doubleValue()
+				+variableWeights.get(2).doubleValue() * rankWeights.get(0).doubleValue()
+				+variableWeights.get(3).doubleValue() * chooseWeights.get(0).doubleValue();
+
+		Double second=variableWeights.get(0).doubleValue() * distanceWeights.get(1).doubleValue()
+				+variableWeights.get(1).doubleValue() * payWeights.get(1).doubleValue()
+				+variableWeights.get(2).doubleValue() * rankWeights.get(1).doubleValue()
+				+variableWeights.get(3).doubleValue() * chooseWeights.get(1).doubleValue();
+
+		Double third=variableWeights.get(0).doubleValue() * distanceWeights.get(2).doubleValue()
+				+variableWeights.get(1).doubleValue() * payWeights.get(2).doubleValue()
+				+variableWeights.get(2).doubleValue() * rankWeights.get(2).doubleValue()
+				+variableWeights.get(3).doubleValue() * chooseWeights.get(2).doubleValue();
+
+		Double total = first+second+third;
+		System.out.println("台大資管系總權重="+first+" 政大統計總權重="+second+" 元智資工系總權重="+third);
+		System.out.println("權重總和="+total);
 	}
 
-	private static void rank(){
+	private static ArrayList<Double> rank(ArrayList<Double> arrayList){
 		//台大:
 		Double a= 1.00;
 		//政大:
@@ -75,10 +106,11 @@ public class AHPApplication {
 				{a/c,b/c,1}
 		};
 		//AHP換算
-		AHP(matrix);
+		arrayList =AHP(matrix,arrayList);
+		return arrayList;
 	}
 
-	private static void distance(String local){
+	private static ArrayList<Double>  distance(String local, ArrayList<Double> arrayList){
 		String location2 ;
 		//台大:臺北市大安區羅斯福路四段1號
 		String a="臺北市大安區羅斯福路四段1號";
@@ -95,10 +127,11 @@ public class AHPApplication {
 				{distance_a/distance_c,distance_b/distance_c,1}
 		};
 		//AHP換算
-		AHP(matrix);
+		arrayList = AHP(matrix,arrayList);
+		return arrayList;
 	}
 
-	private static void pay(){
+	private static ArrayList<Double> pay(ArrayList<Double> arrayList){
 		//台大:
 		Double a= 34500.00;
 		//政大:
@@ -111,10 +144,11 @@ public class AHPApplication {
 				{a/c,b/c,1}
 		};
 		//AHP換算
-		AHP(matrix);
+		arrayList = AHP(matrix,arrayList);
+		return arrayList;
 	}
 
-	private static void AHP(double[][] matrix){
+	private static ArrayList<Double> AHP(double[][] matrix, ArrayList<Double> arrayList){
 		AHPApplication ahp = new AHPApplication();
 		double[] weights = ahp.calculateWeights(matrix);
 
@@ -122,7 +156,9 @@ public class AHPApplication {
 		System.out.println("Calculated Weights:");
 		for (double weight : weights) {
 			System.out.println(weight);
+			arrayList.add(weight);
 		}
+		return arrayList;
 	}
 
 	private static double calculateDistance(String origin, String destination) {
