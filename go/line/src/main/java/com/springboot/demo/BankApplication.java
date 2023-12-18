@@ -300,6 +300,8 @@ public class BankApplication {
                             p=Double.parseDouble(m.replace(",",""));
                             if(p == 15500){
                                 main = "租金_26號十樓+83號車位(15500)";
+                            } else if (p==8500) {
+                                main = "租金_C_十號一樓(8500)";
                             }
                         }
                         break;
