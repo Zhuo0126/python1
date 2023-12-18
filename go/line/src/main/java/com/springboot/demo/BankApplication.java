@@ -445,7 +445,7 @@ public class BankApplication {
                 x=30;
                 y=150;
                 width = 600;
-                height = 1000;
+                height = 670;
                 PDFTextStripperByArea stripper = new PDFTextStripperByArea();
                 stripper.setSortByPosition(true);
                 //取得所需區域
@@ -460,7 +460,7 @@ public class BankApplication {
                 x=30;
                 y=0;
                 width = 600;
-                height = 1000;
+                height = 830;
                 PDFTextStripperByArea stripper = new PDFTextStripperByArea();
                 stripper.setSortByPosition(true);
                 //取得所需區域
