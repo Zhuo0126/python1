@@ -14,10 +14,6 @@ public class SpringBootJDBCTest {
 
     @Test
     public void testJMS() throws Exception {
-        try {
-            mqService.sendMessage("BatchQueue","測試");
-        }catch (Exception e){
-            System.out.println(e);
-        }
+            mqService.sendMessage("TestQueue","20231220");
     }
 }

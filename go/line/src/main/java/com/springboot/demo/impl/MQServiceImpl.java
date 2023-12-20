@@ -14,10 +14,18 @@ public class MQServiceImpl implements MessageService {
     @Autowired(required = false)
     private JmsTemplate messagingTemplate;
 
+//    @Override
+//    public void sendMessage(String destination, String message) {
+//        messagingTemplate.convertAndSend(destination, message);
+//        System.out.println("已成功送"+destination+":"+message);
+//    }
     @Override
     public void sendMessage(String destination, String message) {
-        messagingTemplate.convertAndSend(destination, message);
-        System.out.println("已成功送"+destination+":"+message);
+        try {
+            messagingTemplate.send(destination, session -> session.createTextMessage(message));
+            System.out.println("已成功送" + destination + ":" + message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
 }
