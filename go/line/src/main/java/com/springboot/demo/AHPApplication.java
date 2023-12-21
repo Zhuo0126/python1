@@ -40,13 +40,15 @@ public class AHPApplication {
         rankWeights = rank(rankWeights);
 
         //4科系喜好程度
-        System.out.println("請輸入科系喜好程度偏好程度資管,資工,電機,數學分數越高越重要(1~9),請使用逗號分隔");
+        System.out.println("請輸入科系喜好程度偏好程度，分數越高越重要(1~9),請使用逗號分隔!");
+        System.out.println("資管vs資工,資管vs電機,資管vs數學,資工vs電機,資工vs數學,電機vs數學，ex:9:1");
         String choose = scanner.nextLine();
         String[] o = choose.split(",");
         System.out.println("科系喜好權重");
         chooseWeights = choose(o, chooseWeights);
 
-        System.out.println("請輸入地點,學費,學校排名,科系喜好程度偏好程度,分數越高越重要(1~9),請使用逗號分隔");
+        System.out.println("請輸入地點,學費,學校排名,科系喜好程度偏好程度，分數越高越重要(1~9),請使用逗號分隔!");
+        System.out.println("地點vs學費,地點vs學校排名,地點vs科系喜好程度,學費vs學校排名,學費vs科系喜好程度,學校排名vs科系喜好程度，ex:9:1");
         String point = scanner.nextLine();
         String[] t = point.split(",");
         System.out.println("變數權重");
@@ -138,33 +140,47 @@ public class AHPApplication {
     }
 
     private static ArrayList<Double> choose(String[] o, ArrayList<Double> arrayList) {
-        double aa = Double.valueOf(o[0]);
-        double bb = Double.valueOf(o[1]);
-        double cc = Double.valueOf(o[2]);
-        double dd = Double.valueOf(o[3]);
-        double[][] matrix0 = {
-                {1, aa / bb, aa / cc, aa / dd},
-                {bb / aa, 1, bb / cc, bb / dd},
-                {cc / aa, cc / bb, 1, cc / dd},
-                {dd / aa, dd / bb, dd / cc, 1}
-        };
-        arrayList = AHP(matrix0, arrayList);
+        //資管vs資工,資管vs電機,資管vs數學,資工vs電機,資工vs數學,電機vs數學
+        // 9 : 1 ,  2 : 3 ,  3 : 4 , 5 : 7 , 1 : 5 , 3 : 6
+        double[][] matrix = new double[4][4];
+        int index=0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                double[] values = parseRatio(o[index++]);
+                matrix[i][j] = values[0] / values[1];
+                matrix[j][i] = values[1] / values[0];
+            }
+        }
+
+        // 填充对角线
+        for (int i = 0; i < 4; i++) {
+            matrix[i][i] = 1.0;
+        }
+
+        arrayList = AHP(matrix, arrayList);
 
         return arrayList;
     }
 
+    private static double[] parseRatio(String ratio) {
+        String[] parts = ratio.split(":");
+        return new double[] {Double.parseDouble(parts[0]), Double.parseDouble(parts[1])};
+    }
     private static ArrayList<Double> variable(String[] t, ArrayList<Double> arrayList) {
-        double a = Double.valueOf(t[0]);
-        double b = Double.valueOf(t[1]);
-        double c = Double.valueOf(t[2]);
-        double d = Double.valueOf(t[3]);
+        double[][] matrix = new double[4][4];
+        int index=0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                double[] values = parseRatio(t[index++]);
+                matrix[i][j] = values[0] / values[1];
+                matrix[j][i] = values[1] / values[0];
+            }
+        }
 
-        double[][] matrix = {
-                {1, a / b, a / c, a / d},
-                {b / a, 1, b / c, b / d},
-                {c / a, c / b, 1, c / d},
-                {d / a, d / b, d / c, 1}
-        };
+        // 填充对角线
+        for (int i = 0; i < 4; i++) {
+            matrix[i][i] = 1.0;
+        }
         arrayList = AHP(matrix, arrayList);
 
         return arrayList;
