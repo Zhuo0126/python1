@@ -14,17 +14,18 @@ import org.springframework.jms.annotation.EnableJms;
 
 
 @SpringBootApplication
-@EnableJms
+//@EnableJms
 public class RunApplication  {
 
 	public static void main(String[] args) {
 		try {
+			System.out.println("Hello world");
 //			ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
 //			Connection connection= activeMQConnectionFactory.createConnection();
 //			connection.start();
 //			Session session=connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 //			Queue queue=session.createQueue("TestQueue");
-			SpringApplication.run(RunApplication.class, args);
+//			SpringApplication.run(RunApplication.class, args);
 		}catch (Exception e){
 			System.out.println(e);
 		}

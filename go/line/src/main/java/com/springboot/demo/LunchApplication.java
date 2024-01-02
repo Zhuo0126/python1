@@ -53,7 +53,12 @@ public class LunchApplication {
 		int randomDrinkIndex = random.nextInt(waterList.size());
 
 		String randomEatElement = eatList.get(randomEatIndex);
-		String randomDrinkElement = waterList.get(randomDrinkIndex);
+		String randomDrinkElement ="";
+		if(randomEatElement.equals("摩斯")){
+			randomDrinkElement="";
+		}else{
+			randomDrinkElement=waterList.get(randomDrinkIndex);
+		}
 
 		System.out.println("食物:"+randomEatElement);
 		System.out.println("飲料:"+randomDrinkElement);
