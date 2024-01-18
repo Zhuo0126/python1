@@ -59,6 +59,9 @@ public class LunchApplication {
 		}else{
 			randomDrinkElement=waterList.get(randomDrinkIndex);
 		}
+		if(today == DayOfWeek.WEDNESDAY){
+			randomDrinkElement = "麻古";
+		}
 
 		System.out.println("食物:"+randomEatElement);
 		System.out.println("飲料:"+randomDrinkElement);
