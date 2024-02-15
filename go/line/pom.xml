@@ -227,6 +227,11 @@
 			<version>3.6.28</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- websocket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 	</dependencies>
 	<!--加入osgeo的倉庫位址 -->
 	<repositories>

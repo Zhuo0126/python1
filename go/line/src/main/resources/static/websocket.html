@@ -1,0 +1,194 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket測試畫面</title>
+    <style type="text/css">
+        * {
+            font-size: 14px;
+            line-height: 22px;
+        }
+
+        .main {
+            border: 0px solid #ccc;
+            width: 60%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .main-table {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+        .main-table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .td-left {
+            text-align: right;
+        }
+
+        input[type="text"] {
+            border: 1px solid #ccc;
+            padding: 5px;
+            outline: none;
+            width: 200px;
+        }
+
+        input[type="button"] {
+            border: 1px solid #ccc;
+            padding: 3px 10px;
+            outline: none;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+
+        #msg {
+            font-size: 12px;
+            line-height: 22px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="main">
+    <table class="main-table">
+        <tr>
+            <td colspan="2" style=" text-align: center;font-weight: bold;">WebSocket測試</td>
+        </tr>
+        <tr>
+            <td style="width: 100px;" class="td-left">服務器地址</td>
+            <td><input type="text" id="server" value="https://localhost:8084/ws/"></td>
+        </tr>
+        <tr>
+            <td class="td-left">客戶端名稱</td>
+            <td><input type="text" id="clientId">
+                <input type="button" value="隨機生成" onclick="GenerateClientId()" />
+            </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>
+                <input type="button" value="連接" onclick="ConnectServer()" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-left">連接狀態</td>
+            <td> <span id="status"><span class='red'>未連接</span></span></td>
+        </tr>
+        <tr>
+            <td class="td-left">發送消息</td>
+            <td>
+                <input type="text" id="txt">
+            </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>
+                <input type="button" value="發送" onclick="SendMsg()" />
+                <input type="button" value="清空" onclick="ClearLog()" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-left">日誌</td>
+            <td>
+                <div id="msg"></div>
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+            var websocket = null;
+            var clientId = "";
+
+            //随机生成客户端编号
+            function GenerateClientId() {
+                clientId = Math.random().toString().substr(2);
+                document.getElementById("clientId").value = clientId;
+            }
+            GenerateClientId();
+
+            //连接到服务器
+            function ConnectServer() {
+                var clientId = document.getElementById("clientId").value;
+                if (clientId == "") {
+                    alert("客户端编号不能为空!");
+                } else {
+                    if ("WebSocket" in window) {
+                        websocket = new WebSocket("ws://localhost:8084/ws/" + clientId);
+
+                        websocket.onerror = function () {
+                            ShowMsg("<span class='red'>ERROR</span>");
+                        }
+                        websocket.onopen = function () {
+                            document.getElementById("status").innerHTML = "<span class='green'>已连接</span>";
+                            ShowMsg("<span class='green'>连接成功！</span>");
+                        }
+                        websocket.onmessage = function (event) {
+                            ShowMsg(event.data);
+                        }
+                        websocket.onclose = function () {
+                            ShowMsg("<span class='red'>断开连接</span>");
+                        }
+
+                    }
+                    else {
+                        alert("NOT SUPPORT WEBSOCKET!");
+                    }
+                }
+            }
+
+
+
+            //网页关闭时，断开链接
+            window.onbeforeunload = function () {
+                websocket.close();
+            }
+
+            //显示日志
+            function ShowMsg(msg) {
+                document.getElementById("msg").innerHTML += Now() + " " + msg + "<br/>";
+            }
+
+            //发送消息
+            function SendMsg() {
+                var txt = document.getElementById("txt").value;
+                websocket.send(txt);
+                ShowMsg("<span class='green'>发送消息：" + txt + "</span>");
+            }
+
+            //断开链接
+            function closeWebSocket() {
+                websocket.close();
+            }
+
+            function Now() {
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                const hour = date.getHours().toString().padStart(2, '0');
+                const minute = date.getMinutes().toString().padStart(2, '0');
+                const second = date.getSeconds().toString().padStart(2, '0');
+                const format = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+                return format;
+            }
+
+            //清空日志
+            function ClearLog() {
+                document.getElementById("msg").innerHTML = "";
+            }
+        </script>
+</div>
+</body>
+
+</html>

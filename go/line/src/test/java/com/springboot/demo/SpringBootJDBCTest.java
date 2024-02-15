@@ -66,4 +66,42 @@ public class SpringBootJDBCTest {
     void testAfterCompletion() {
         // 在这里添加对 afterCompletion 的测试
     }
+
+    @Test
+    void test() {
+// 示例员工代码
+        String employeeCode = "440802";
+        // 调用方法计算验证代码
+        String verificationCode = calculateVerificationCode(employeeCode);
+        // 输出验证代码
+        System.out.println("Verification Code: " + verificationCode);
+    }
+
+    public static String calculateVerificationCode(String employeeCode) {
+        // 获取员工代码的最后四位
+        String lastFourDigits = employeeCode.substring(employeeCode.length() - 4);
+        int total = 0;
+
+        // 遍历最后四位
+        for (int i = 0; i < lastFourDigits.length(); i++) {
+            char charAt = lastFourDigits.charAt(i);
+            // 判断字符是否为数字
+            if (Character.isDigit(charAt)) {
+                total += Character.getNumericValue(charAt);
+            }
+            // 判断字符是否为字母
+            else if (Character.isLetter(charAt)) {
+                total += Character.toUpperCase(charAt) - 'A' + 1;
+            }
+            // 其他情况
+            else {
+                total = 2023;
+                break;
+            }
+        }
+
+        // 计算验证代码
+        String verificationCode = String.format("%02d", (total * 29 - 6) % 100).replace(" ", "7");
+        return verificationCode;
+    }
 }
