@@ -232,6 +232,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+		<!-- openAI -->
+		<dependency>
+			<groupId>com.theokanning.openai-gpt3-java</groupId>
+			<artifactId>client</artifactId>
+			<version>0.18.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.theokanning.openai-gpt3-java</groupId>
+			<artifactId>service</artifactId>
+			<version>0.18.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.10.0</version>
+		</dependency>
+
 	</dependencies>
 	<!--加入osgeo的倉庫位址 -->
 	<repositories>
@@ -248,6 +265,20 @@
 			<url>https://repo.osgeo.org/repository/snapshot/</url>
 			<snapshots><enabled>true</enabled></snapshots>
 			<releases><enabled>false</enabled></releases>
+		</repository>
+		<repository>
+			<id>openai-client-repo</id>
+			<name>OpenAI Client Repository</name>
+			<url> https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/client</url> <!-- 替换为实际的仓库 URL -->
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+		</repository>
+		<repository>
+			<id>openai-client-repo</id>
+			<name>OpenAI Client Repository</name>
+			<url>https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/service</url> <!-- 替换为实际的仓库 URL -->
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
 		</repository>
 	</repositories>
 	<!-- 所有dependency-->
