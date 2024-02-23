@@ -1,17 +1,16 @@
 package com.springboot.demo.service;
 
-import com.springboot.demo.config.QuartzConfig;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class QuartzService {
 //    private final Scheduler scheduler;
-    private final RestTemplate restTemplate;
 
 //    @Autowired
 //    public QuartzService(Scheduler scheduler) {
@@ -28,14 +27,4 @@ public class QuartzService {
 //        // 调度任务
 //        scheduler.scheduleJob(QuartzConfig.jobDetail().getObject(), QuartzConfig.trigger(QuartzConfig.jobDetail().getObject()).getObject());
 //    }
-
-    @Autowired
-    public QuartzService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    public String callExternalApi() {
-        String url = "http://example.com/api/resource"; // 外部API的URL
-        return restTemplate.getForObject(url, String.class);
-    }
 }

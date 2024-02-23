@@ -1,15 +1,21 @@
 package com.springboot.demo.config;
 
 import com.springboot.demo.batch.MyScheduledJob;
+import com.springboot.demo.batch.MyScheduledJobTest;
 import org.quartz.JobDetail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class QuartzConfig {
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public static JobDetailFactoryBean jobDetail() {
@@ -25,7 +31,7 @@ public class QuartzConfig {
         CronTriggerFactoryBean triggerFactoryBean = new CronTriggerFactoryBean();
         triggerFactoryBean.setJobDetail(jobDetail);
         // 每天六点执行的 cron 表达式
-        triggerFactoryBean.setCronExpression("0 0 6 * * ?");
+        triggerFactoryBean.setCronExpression("0 15 11 * * ?");
         return triggerFactoryBean;
     }
 //    @Bean

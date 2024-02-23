@@ -1,5 +1,6 @@
 package com.springboot.demo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.demo.impl.MQServiceImpl;
 import com.springboot.demo.util.SpringBeanFactoryUtil;
 import com.springboot.demo.util.interceptors.TimingInterceptor;
@@ -11,22 +12,21 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 public class SpringBootJDBCTest {
-//    @Autowired(required = false)
-//    private MQServiceImpl mqService;
-//
-//    @Test
-//    public void testJMS() throws Exception {
-//        //測試Active MQ收送
-//        mqService.sendMessage("TestQueue","20231220");
-//    }
 
     @Mock
     private HttpServletRequest request;
@@ -34,7 +34,7 @@ public class SpringBootJDBCTest {
     private HttpServletResponse response;
     @Mock
     private Object handler;
-
+    @Autowired
     private TimingInterceptor timingInterceptor;
     @BeforeEach
     void setUp() {

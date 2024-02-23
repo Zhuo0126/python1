@@ -1,5 +1,8 @@
 #server:
 #  port: 8081
+mybatis:
+  mapper-locations: classpath*:com/springboot/demo/mapper/*.xml
+  type-aliases-package: com.esagent.bean
 
 spring:
   artemis:
@@ -16,3 +19,4 @@ spring:
       max-sessions-per-connection: 100
   jms:
     session-cache-size: 5
+
