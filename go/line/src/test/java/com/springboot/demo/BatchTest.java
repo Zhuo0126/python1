@@ -33,8 +33,8 @@ public class BatchTest {
     @Mock
     private JobExecutionContext jobExecutionContext;
 
-//    @MockBean
-//    private MybatisService mybatisService;
+    @MockBean
+    private MybatisService mybatisService;
     @Autowired
     private MyScheduledJob myScheduledJob;
 
