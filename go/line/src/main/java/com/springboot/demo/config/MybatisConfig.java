@@ -28,7 +28,7 @@ public class MybatisConfig {
     public SqlSessionFactory mySqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource);
-        sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:org/example/mapper/*.xml"));
+        sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:com/springboot/demo/mapper/*.xml"));
         return sessionFactoryBean.getObject();
     }
 
